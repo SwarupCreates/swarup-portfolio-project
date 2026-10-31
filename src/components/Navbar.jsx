@@ -1,67 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Navbar.css';
 
 const navItems = [
-  { id: 'home', label: 'Home' },
-  { id: 'pageA', label: 'Page A' },
-  { id: 'pageB', label: 'Page B' },
-  { id: 'pageC', label: 'Page C' },
+  { id: 'hero', label: 'Home' },
+  { id: 'projects', label: 'Repository' },
+  { id: 'about', label: 'About' },
+  { id: 'contact', label: 'Contact' },
 ];
 
-export default function Navbar({ currentPage, setCurrentPage }) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const handleNavClick = (id) => {
-    setCurrentPage(id);
-    setIsMobileMenuOpen(false);
+export default function Navbar() {
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
     <header className="navbar-header">
       <nav className="navbar" aria-label="Main Navigation">
-        <div className="navbar-brand" onClick={() => handleNavClick('home')}>
-          <span>Swarup</span>Portfolio
+        <div className="navbar-brand" onClick={() => scrollToSection('hero')}>
+          <span>Swarup</span>Ranjan Paul
         </div>
 
-        {/* Desktop Menu */}
-        <ul className="navbar-links desktop-only">
+        <ul className="navbar-links">
           {navItems.map((item) => (
             <li key={item.id}>
               <button
-                className={`nav-link ${currentPage === item.id ? 'active' : ''}`}
-                onClick={() => handleNavClick(item.id)}
+                className="nav-link"
+                onClick={() => scrollToSection(item.id)}
               >
                 {item.label}
               </button>
             </li>
           ))}
         </ul>
-
-        {/* Mobile Toggle Button */}
-        <button
-          className="mobile-menu-btn mobile-only"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle Navigation Menu"
-          aria-expanded={isMobileMenuOpen}
-        >
-          <span className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}></span>
-        </button>
-
-        {/* Mobile Dropdown Menu */}
-        {isMobileMenuOpen && (
-          <ul className="navbar-links mobile-menu mobile-only">
-            {navItems.map((item) => (
-              <li key={item.id}>
-                <button
-                  className={`nav-link ${currentPage === item.id ? 'active' : ''}`}
-                  onClick={() => handleNavClick(item.id)}
-                >
-                  {item.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
       </nav>
     </header>
   );

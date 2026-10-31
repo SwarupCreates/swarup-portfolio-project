@@ -1,21 +1,36 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
+import Navbar from './components/Navbar';
+import PageA from './pages/PageA';
+import PageB from './pages/PageB';
+import PageC from './pages/PageC';
+import Home from './pages/Home';
+import './App.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('Home')
+  const [currentPage, setCurrentPage] = useState('home');
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'pageA':
+        return <PageA />;
+      case 'pageB':
+        return <PageB />;
+      case 'pageC':
+        return <PageC />;
+      case 'home':
+      default:
+        return <Home />;
+    }
+  };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <nav style={{ marginBottom: '20px' }}>
-        <button onClick={() => setCurrentPage('Home')}>Home</button>
-        <button onClick={() => setCurrentPage('Page A')}>Page A</button>
-        <button onClick={() => setCurrentPage('Page B')}>Page B</button>
-        <button onClick={() => setCurrentPage('Page C')}>Page C</button>
-      </nav>
-      <main>
-        <h1>Hello World: {currentPage}</h1>
+    <div className="app-container">
+      <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <main className="main-content">
+        {renderPage()}
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
